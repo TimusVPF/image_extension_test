@@ -39,7 +39,7 @@ void handle_fix(const fs::path path, const std::string expected)
     const std::string replacement = expected.substr(0, expected.find('|'));
     fs::path operable_path = path;
     fs::rename(path, operable_path.replace_extension(replacement));
-    std::cout << "\033[1;32mSuccessfully changed the filename to " << path << ".\033[0m" << std::endl;
+    std::cout << "\033[1;32mSuccessfully changed the filename to " << operable_path << ".\033[0m" << std::endl;
 }
 
 void print_mismatched_extensions(const std::vector<fs::path> paths)
