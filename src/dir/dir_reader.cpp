@@ -16,7 +16,6 @@ std::vector<fs::path> list_entry_paths(const fs::path& path, const bool recursiv
         const bool is_directory = entry.is_directory();
         if (recursive && is_directory) {
             const std::vector<fs::path> additional_entries = list_entry_paths(entry, recursive, print_directories, filter);
-            // paths.insert(paths.end(), additional_entries.begin(), additional_entries.end());
             paths.reserve(paths.size() + additional_entries.size());
             paths.insert(paths.end(), additional_entries.begin(), additional_entries.end());
         }
