@@ -19,6 +19,9 @@ typedef enum filetype {
 
     GIF,
 
+    TIF,
+    TIFF,
+
     UNKNOWN,
 } filetype;
 

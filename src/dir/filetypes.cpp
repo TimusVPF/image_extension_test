@@ -10,6 +10,7 @@ std::unordered_map<dir::filetype, std::string> extension_map = {
     { WEBP, ".webp|.riff" },
     { BMP, ".bmp|.dib" },
     { GIF, ".gif" },
+    { TIFF, ".tiff|.tif" },
     { UNKNOWN, "" },
 };
 
@@ -43,6 +44,12 @@ bool is_gif(unsigned char buffer[BUFFER_CAPACITY])
         || (buffer[0] == 0x47 && buffer[1] == 0x49 && buffer[2] == 0x46 && buffer[3] == 0x38 && buffer[4] == 0x39 && buffer[5] == 0x61);
 }
 
+bool is_tiff(unsigned char buffer[BUFFER_CAPACITY])
+{
+    return (buffer[0] == 0x49 && buffer[1] == 0x49 && buffer[2] == 0x2A && buffer[3] == 0x00) // Little Endian
+        || (buffer[0] == 0x4D && buffer[1] == 0x4D && buffer[2] == 0x00 && buffer[3] == 0x2A); // Big Endian
+}
+
 filetype try_parse_filetype(const fs::path& path)
 {
     unsigned char buffer[BUFFER_CAPACITY];
@@ -65,6 +72,9 @@ filetype try_parse_filetype(const fs::path& path)
     if (is_gif(buffer)) {
         return GIF;
     }
+    if (is_tiff(buffer)) {
+        return TIFF;
+    }
 
     return UNKNOWN;
 }
@@ -77,6 +87,7 @@ bool is_image(filetype type)
     case WEBP:
     case BMP:
     case GIF:
+    case TIFF:
         return true;
     default:
         return false;
