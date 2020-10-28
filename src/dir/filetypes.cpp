@@ -107,7 +107,7 @@ bool does_filetype_match_extension(const fs::path& path)
 {
     std::string expected = expected_extension(path);
     return expected.length() <= 0
-        || expected.find(path.extension().generic_string()) != std::string::npos;
+        || (path.extension().generic_string().length() > 0 && expected.find(path.extension().generic_string()) != std::string::npos);
 }
 
 }
